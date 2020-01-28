@@ -60,3 +60,11 @@ cd ~/IdeaProjects/iwaki-onion-architecture-for-vuejs/onion-architecture-webapp
 yarn test:unit
 yarn serve
 ```
+
+# additional modules
+```
+yarn add axios axios-mock-adapter
+yarn add element-ui
+yarn add vue-js-modal
+yarn add nedb-promises
+```

@@ -1,12 +1,14 @@
-import { shallowMount } from "@vue/test-utils";
-import HelloWorld from "@/components/HelloWorld.vue";
+import HelloUseCase from "@/application/service/HelloUseCase";
+import { HelloModel } from "@/domain/model/HelloModel";
 
-describe("HelloWorld.vue", () => {
-  it("renders props.msg when passed", () => {
-    const msg = "new message";
-    const wrapper = shallowMount(HelloWorld, {
-      propsData: { msg }
-    });
-    expect(wrapper.text()).toMatch(msg);
+describe("/application/service/HelloUseCase test sample", () => {
+  it("renders props.msg when passed", async () => {
+    const expected = Promise.resolve([]);
+    const helloUseCase = new HelloUseCase();
+    jest
+      .spyOn(helloUseCase.helloRepository, "reads")
+      .mockImplementation(() => expected);
+    const actual: Promise<HelloModel[]> = helloUseCase.reads();
+    expect((await actual).length).toBe((await expected).length);
   });
 });
