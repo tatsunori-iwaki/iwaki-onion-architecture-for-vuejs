@@ -6,7 +6,9 @@
   <br>
 </h1>
 <h4 align="center">
-  Vuejs web sample implemented based on onion architecture
+  Vuejs web sample implemented based on onion architecture.
+  Simple TODO application.
+  Implements API calls by axios up to mock. with in-memory nedb.
 </h4>
 
 # Screenshot
