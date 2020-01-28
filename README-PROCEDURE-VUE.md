@@ -1,9 +1,11 @@
 
+# vue create
 ```
 cd ~/IdeaProjects/iwaki-onion-architecture-for-vuejs
 vue create onion-architecture-webapp
 ```
 
+# manual
 ```
 Vue CLI v3.12.0
 ┌───────────────────────────┐
@@ -14,6 +16,7 @@ Vue CLI v3.12.0
 ❯ Manually select features 
 ```
 
+# full set
 ```
 ┌───────────────────────────┐
 │  Update available: 4.1.2  │
@@ -31,6 +34,7 @@ Vue CLI v3.12.0
 ❯◉ E2E Testing
 ```
 
+# choose setting
 ```
 Vue CLI v3.12.0
 ┌───────────────────────────┐
@@ -50,7 +54,9 @@ Vue CLI v3.12.0
 ? Save this as a preset for future projects? No
 ```
 
+# first run serve
 ```
 cd ~/IdeaProjects/iwaki-onion-architecture-for-vuejs/onion-architecture-webapp
+yarn test:unit
 yarn serve
 ```
