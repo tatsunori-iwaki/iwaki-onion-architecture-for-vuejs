@@ -8,7 +8,7 @@ import { AxiosInstance } from "axios";
 import mock from "../../../mocks/api/hellos/hello";
 
 /**
- * it's awesom!!
+ * it's awesome!!
  * Since there are no dependencies in the domain layer,
  * the implementation content is API, database, or anything else.
  */

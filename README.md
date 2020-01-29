@@ -39,6 +39,7 @@
 cd ~/IdeaProjects
 git clone https://github.com/tatsunori-iwaki/iwaki-onion-architecture-for-vuejs.git
 cd ~/IdeaProjects/iwaki-onion-architecture-for-vuejs/onion-architecture-webapp
+yarn
 yarn test:unit
 yarn serve
 ```
