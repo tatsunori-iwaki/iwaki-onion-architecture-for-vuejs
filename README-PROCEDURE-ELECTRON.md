@@ -83,3 +83,8 @@ yarn add element-ui
 yarn add vue-js-modal
 yarn add nedb-promises
 ```
+
+# Output packaged app to `./dist_electron/mac/onion-architecture-electron.app`
+```
+yarn electron:build
+```
