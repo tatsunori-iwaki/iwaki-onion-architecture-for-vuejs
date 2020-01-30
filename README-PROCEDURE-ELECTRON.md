@@ -87,4 +87,6 @@ yarn add nedb-promises
 # Output packaged app to `./dist_electron/mac/onion-architecture-electron.app`
 ```
 yarn electron:build
+ls -l ./dist_electron/mac/
+open ./dist_electron/mac/onion-architecture-electron.app
 ```

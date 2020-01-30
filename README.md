@@ -6,15 +6,19 @@
   <br>
 </h1>
 <h4 align="center">
-  Vuejs web sample implemented based on onion architecture.
-  Simple TODO application.
-  Implements API calls by axios up to mock. with in-memory nedb.
+  Vuejs web example implemented based on onion architecture.
+  <br>This is a very simple TODO application using TypeScript.
+  <br>Implements API calls by axios up to mock. with in-memory nedb.
 </h4>
 
-# Screenshot
+# Screenshot - webapp case
 ![](docs/Screenshot-001.png)
 ![](docs/Screenshot-002.png)
 ![](docs/Screenshot-003.png)
+
+# Screenshot - electron case
+![](docs/Screenshot-electron-002.png)
+![](docs/Screenshot-electron-001.png)
 
 # Presentation
 ![](docs/Presentation-001.png)
@@ -35,6 +39,7 @@
 ![](docs/Presentation-006.png)
 
 # How to use
+## web application case
 ```
 cd ~/IdeaProjects
 git clone https://github.com/tatsunori-iwaki/iwaki-onion-architecture-for-vuejs.git
@@ -44,6 +49,20 @@ yarn test:unit
 yarn serve
 ```
 
+## electron develop application case
+```
+cd ~/IdeaProjects/iwaki-onion-architecture-for-vuejs/onion-architecture-electron
+yarn electron:serve
+```
+
+## electron package application case
+```
+yarn electron:build
+ls -l ./dist_electron/mac/
+open ./dist_electron/mac/onion-architecture-electron.app
+```
+
 # Initial build documentation
 [README-PROCEDURE-VUE.md](./README-PROCEDURE-VUE.md)
+[README-PROCEDURE-VUE.md](./README-PROCEDURE-ELECTRON.md)
 
