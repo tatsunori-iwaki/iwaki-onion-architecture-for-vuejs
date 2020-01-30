@@ -39,24 +39,30 @@
 ![](docs/Presentation-006.png)
 
 # How to use
-## web application case
+## 🍺 clone projects
 ```
 cd ~/IdeaProjects
 git clone https://github.com/tatsunori-iwaki/iwaki-onion-architecture-for-vuejs.git
+```
+
+## 🍺 web application case
+```
 cd ~/IdeaProjects/iwaki-onion-architecture-for-vuejs/onion-architecture-webapp
 yarn
 yarn test:unit
 yarn serve
 ```
 
-## electron develop application case
+## 🍺 electron develop application case
 ```
 cd ~/IdeaProjects/iwaki-onion-architecture-for-vuejs/onion-architecture-electron
+yarn
 yarn electron:serve
 ```
 
-## electron package application case
+## 🍺 electron package application case
 ```
+yarn
 yarn electron:build
 ls -l ./dist_electron/mac/
 open ./dist_electron/mac/onion-architecture-electron.app
