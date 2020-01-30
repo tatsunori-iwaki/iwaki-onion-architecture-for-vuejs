@@ -62,6 +62,7 @@ yarn electron:serve
 
 ## 🍺 electron package application case
 ```
+cd ~/IdeaProjects/iwaki-onion-architecture-for-vuejs/onion-architecture-electron
 yarn
 yarn electron:build
 ls -l ./dist_electron/mac/
