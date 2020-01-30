@@ -71,5 +71,6 @@ open ./dist_electron/mac/onion-architecture-electron.app
 
 # Initial build documentation
 [README-PROCEDURE-VUE.md](./README-PROCEDURE-VUE.md)
+
 [README-PROCEDURE-VUE.md](./README-PROCEDURE-ELECTRON.md)
 
