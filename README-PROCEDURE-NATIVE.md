@@ -59,11 +59,7 @@ yarn add --dev @types/react @types/react-native
 yarn tsc --init --pretty --jsx react
 ```
 
-<!---------------------------------------------------------------------- -->
 # additional modules
 ```
-yarn add axios axios-mock-adapter
-yarn add element-ui
-yarn add vue-js-modal
-yarn add nedb-promises
+yarn add vuex
 ```

@@ -1,4 +1,4 @@
-import { HelloModel } from "../model/HelloModel";
+import { HelloModel } from "@/domain/model/HelloModel";
 
 /**
  * Define the operation rules of the domain layer model as an interface.
