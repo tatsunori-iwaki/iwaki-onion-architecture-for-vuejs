@@ -26,13 +26,13 @@ export default {
     HelloForm
   },
   data: {
+    helloUseCase: new HelloUseCase(),
     helloModels: [],
     helloModel: {},
     editModeState: EditModeEnum.NEW
   },
   async created() {
-    const helloUseCase = new HelloUseCase();
-    this.helloModels = await helloUseCase.reads();
+    this.loadHellos();
   },
   computed: {
     computedEditModeState() {
@@ -47,6 +47,7 @@ export default {
     eventSaveHandler() {
       if (this.editModeState === EditModeEnum.NEW) this.createHello();
       if (this.editModeState === EditModeEnum.EDIT) this.updateHello();
+      this.loadHellos();
     },
     eventCancelHandler() {
       this.editModeState = EditModeEnum.NEW;
@@ -70,6 +71,9 @@ export default {
     },
     deleteHello() {
       console.log("[DEBUG-deleteHello()]");
+    },
+    async loadHellos() {
+      this.helloModels = await this.helloUseCase.reads();
     }
   }
 };
