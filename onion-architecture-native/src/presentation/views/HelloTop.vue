@@ -1,28 +1,57 @@
 <template>
   <view class="container">
-    <hello-list @select-event="eventSelectHelloHandler" :helloModels="helloModels" />
+    <hello-form
+      :helloModel="helloModel"
+      @save-event="eventSaveHandler"
+      @cancel-event="eventCancelHandler"
+      :editMode="computedEditModeState"
+    />
+    <hello-list :helloModels="helloModels" @select-event="eventSelectHelloHandler" />
   </view>
 </template>
 
 <script>
 import HelloList from "../components/HelloList";
+import HelloForm from "../components/HelloForm";
 import HelloUseCase from "../../application/service/HelloUseCase";
+import { EditModeEnum } from "../enums/HelloEnums";
 
 export default {
   components: {
-    HelloList
+    HelloList,
+    HelloForm
   },
   data: {
-    helloModels: []
+    helloModels: [],
+    helloModel: {},
+    editModeState: EditModeEnum.NEW
   },
   async created() {
     const helloUseCase = new HelloUseCase();
     this.helloModels = await helloUseCase.reads();
-    console.log("[DEBUG]-helloTop-loadHellos()", this.helloModels);
+  },
+  computed: {
+    computedEditModeState() {
+      return this.editModeState;
+    }
   },
   methods: {
     eventSelectHelloHandler(helloModel) {
-    console.log("[DEBUG]-helloTop-eventSelectHelloHandler()", helloModel);
+      this.editModeState = EditModeEnum.EDIT;
+      this.helloModel = { ...helloModel };
+    },
+    eventSaveHandler() {
+      if (this.editModeState === EditModeEnum.NEW) this.createHello();
+      if (this.editModeState === EditModeEnum.EDIT) this.updateHello();
+    },
+    eventCancelHandler() {
+      this.editModeState = EditModeEnum.NEW;
+    },
+    createHello() {
+      console.log('[DEBUG-createHello()]')
+    },
+    updateHello() {
+      console.log('[DEBUG-updateHello()]')
     }
   }
 };
@@ -30,7 +59,7 @@ export default {
  
 <style>
 .container {
-  background-color: rgb(172, 169, 169);
+  background-color: white;
   flex: 1;
   padding-top: 40;
 }

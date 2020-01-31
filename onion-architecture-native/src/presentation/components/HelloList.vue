@@ -32,7 +32,7 @@ export default {
 
 <style>
 .hello-wrapper {
-  background-color: beige;
+  background-color: white;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
