@@ -6,7 +6,11 @@
       @cancel-event="eventCancelHandler"
       :editMode="computedEditModeState"
     />
-    <hello-list :helloModels="helloModels" @select-event="eventSelectHelloHandler" />
+    <hello-list
+      :helloModels="helloModels"
+      @select-event="eventSelectHelloHandler"
+      @delete-event="eventDeleteHelloHandler"
+    />
   </view>
 </template>
 
@@ -48,15 +52,24 @@ export default {
       this.editModeState = EditModeEnum.NEW;
       this.resetModel();
     },
+    eventDeleteHelloHandler() {
+      this.editModeState = EditModeEnum.NEW;
+      const copyModel = { ...this.helloModel };
+      this.deleteHello(copyModel);
+      this.resetModel();
+    },
     resetModel() {
       this.helloModel.message = "";
     },
     createHello() {
-      console.log('[DEBUG-createHello()]')
+      console.log("[DEBUG-createHello()]");
       this.resetModel();
     },
     updateHello() {
-      console.log('[DEBUG-updateHello()]')
+      console.log("[DEBUG-updateHello()]");
+    },
+    deleteHello() {
+      console.log("[DEBUG-deleteHello()]");
     }
   }
 };

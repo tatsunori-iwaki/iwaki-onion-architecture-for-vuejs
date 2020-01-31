@@ -6,6 +6,9 @@
         <touchable-opacity :on-press="() => selectHello(helloModel)" class="edit-button">
           <image :source="editIcon" class="image-style" />
         </touchable-opacity>
+        <touchable-opacity :on-press="() => deleteHello(helloModel)">
+          <image :source="crossIcon" class="image-style" />
+        </touchable-opacity>
       </view>
     </view>
   </scroll-view>
@@ -13,11 +16,12 @@
 
 <script>
 import editIcon from "../../../assets/edit_icon.png";
+import crossIcon from "../../../assets/cross_icon.png";
 
 export default {
   props: ["helloModels"],
   data: function() {
-    return { editIcon };
+    return { editIcon, crossIcon };
   },
   mounted: function() {
     console.log("[DEBUG-HelloList-mounted]", this.helloModels);
@@ -25,6 +29,9 @@ export default {
   methods: {
     selectHello(helloModel) {
       this.$emit("select-event", helloModel);
+    },
+    deleteHello(helloModel) {
+      this.$emit("delete-event", helloModel);
     }
   }
 };
