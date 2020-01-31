@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <hello-list />
+    <hello-list @select-event="eventSelectHelloHandler" :helloModels="helloModels" />
   </view>
 </template>
 
@@ -19,6 +19,11 @@ export default {
     const helloUseCase = new HelloUseCase();
     this.helloModels = await helloUseCase.reads();
     console.log("[DEBUG]-helloTop-loadHellos()", this.helloModels);
+  },
+  methods: {
+    eventSelectHelloHandler(helloModel) {
+    console.log("[DEBUG]-helloTop-eventSelectHelloHandler()", helloModel);
+    }
   }
 };
 </script>
