@@ -8,7 +8,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "axios-mock-adapter": "^1.17.0",
+    "events": "^3.1.0",
     "expo": "~36.0.0",
+    "nedb-promises": "^4.0.1",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",

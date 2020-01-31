@@ -62,4 +62,6 @@ yarn tsc --init --pretty --jsx react
 # additional modules
 ```
 yarn add vuex
+yarn add nedb-promises events
+yarn add axios axios-mock-adapter
 ```

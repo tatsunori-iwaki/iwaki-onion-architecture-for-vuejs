@@ -12,10 +12,13 @@ export default {
   components: {
     HelloList
   },
-  created() {
+  data: {
+    helloModels: []
+  },
+  async created() {
     const helloUseCase = new HelloUseCase();
-    console.log("[DEBUG]-created()");
-    console.log("[DEBUG]-created()", helloUseCase.reads());
+    this.helloModels = await helloUseCase.reads();
+    console.log("[DEBUG]-helloTop-loadHellos()", this.helloModels);
   }
 };
 </script>
