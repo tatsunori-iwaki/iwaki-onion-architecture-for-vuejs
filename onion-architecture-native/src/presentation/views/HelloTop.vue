@@ -46,9 +46,14 @@ export default {
     },
     eventCancelHandler() {
       this.editModeState = EditModeEnum.NEW;
+      this.resetModel();
+    },
+    resetModel() {
+      this.helloModel.message = "";
     },
     createHello() {
       console.log('[DEBUG-createHello()]')
+      this.resetModel();
     },
     updateHello() {
       console.log('[DEBUG-updateHello()]')
