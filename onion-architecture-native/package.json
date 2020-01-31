@@ -18,7 +18,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
+    "@types/react": "^16.9.19",
+    "@types/react-native": "^0.61.8",
     "babel-preset-expo": "~8.0.0",
+    "typescript": "^3.7.5",
     "vue-native-scripts": "0.1.4"
   },
   "private": true
