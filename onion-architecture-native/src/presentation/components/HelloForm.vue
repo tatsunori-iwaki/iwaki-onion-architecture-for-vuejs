@@ -29,10 +29,10 @@ export default {
     }
   },
   methods: {
-    save(helloModel) {
+    save() {
       this.$emit("save-event");
     },
-    cancel(helloModel) {
+    cancel() {
       this.$emit("cancel-event");
     }
   }

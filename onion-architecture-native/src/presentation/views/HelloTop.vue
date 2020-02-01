@@ -53,6 +53,17 @@ export default {
     },
 
     /**
+     * Receive event notifications from input components (delete)
+     */
+    async eventDeleteHelloHandler(helloModel) {
+      this.editModeState = EditModeEnum.NEW;
+      this.helloModel = { ...helloModel };
+      await this.deleteHello(this.helloModel);
+      await this.loadHellos();
+      this.resetModel();
+    },
+
+    /**
      * Receive event notifications from input components (save)
      */
     async eventSaveHandler() {
@@ -70,21 +81,10 @@ export default {
     },
 
     /**
-     * Receive event notifications from input components (delete)
-     */
-    async eventDeleteHelloHandler() {
-      this.editModeState = EditModeEnum.NEW;
-      const copyModel = { ...this.helloModel };
-      await this.deleteHello(copyModel);
-      await this.loadHellos();
-      this.resetModel();
-    },
-
-    /**
      * Initializes the model framework.
      */
     resetModel() {
-      this.helloModel.message = "";
+      this.helloModel = {};
     },
 
     /**
