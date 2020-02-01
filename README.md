@@ -1,6 +1,3 @@
-<head>
-<meta name="google-site-verification" content="fMhsKHRW3Go_n_kCwhZZsGHCrGHwFX9h9kywNxAYhgk" />
-</head>
 <h1 align="center">
   <br>
   <img src="./docs/icon.png"alt="Markdownify" width="200">
