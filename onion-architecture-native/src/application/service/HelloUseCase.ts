@@ -19,6 +19,7 @@ export default class HelloUseCase {
     this.helloRepository = RepositoryFactory.helloRepository();
   }
 
+  /** Reads Hello */
   public reads(): Promise<HelloModel[]> {
     return this.helloRepository.reads();
   }
