@@ -44,22 +44,25 @@ export default {
   flex-direction: row;
   padding-top: 40;
   padding-bottom: 40;
+  padding: 10;
 }
 .input-wrapper {
   flex: 1;
   border-width: 1;
-  border-color: rgb(112, 84, 46);
+  border-color: black;
   justify-content: center;
-  padding: 10;
+  padding: 15;
 }
 .save-button {
   background-color: #1da1c988;
   border-width: 1;
   justify-content: center;
+  padding: 10;
 }
 .cancel-button {
   background-color: #3d3e3f88;
   border-width: 1;
   justify-content: center;
+  padding: 10;
 }
 </style>
