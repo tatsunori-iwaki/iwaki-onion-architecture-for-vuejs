@@ -31,7 +31,7 @@ export default {
     helloModel: {},
     editModeState: EditModeEnum.NEW
   },
-  async created() {
+  async mounted() {
     this.loadHellos();
   },
   computed: {
@@ -55,10 +55,10 @@ export default {
     /**
      * Receive event notifications from input components (save)
      */
-    eventSaveHandler() {
-      if (this.editModeState === EditModeEnum.NEW) this.createHello();
-      if (this.editModeState === EditModeEnum.EDIT) this.updateHello();
-      this.loadHellos();
+    async eventSaveHandler() {
+      if (this.editModeState === EditModeEnum.NEW) await this.createHello();
+      if (this.editModeState === EditModeEnum.EDIT) await this.updateHello();
+      await this.loadHellos();
     },
 
     /**
@@ -72,11 +72,11 @@ export default {
     /**
      * Receive event notifications from input components (delete)
      */
-    eventDeleteHelloHandler() {
+    async eventDeleteHelloHandler() {
       this.editModeState = EditModeEnum.NEW;
       const copyModel = { ...this.helloModel };
-      this.deleteHello(copyModel);
-      this.loadHellos();
+      await this.deleteHello(copyModel);
+      await this.loadHellos();
       this.resetModel();
     },
 
