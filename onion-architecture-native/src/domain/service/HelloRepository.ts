@@ -6,4 +6,7 @@ import { HelloModel } from "@/domain/model/HelloModel";
  */
 export interface HelloRepository {
   reads(): Promise<HelloModel[]>;
+  create(helloModel: HelloModel): Promise<HelloModel>;
+  update(helloModel: HelloModel): Promise<void>;
+  delete(helloModel: HelloModel): Promise<void>;
 }

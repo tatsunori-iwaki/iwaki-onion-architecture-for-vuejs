@@ -22,4 +22,19 @@ export default class HelloUseCase {
   public reads(): Promise<HelloModel[]> {
     return this.helloRepository.reads();
   }
+
+  /** Create Hello */
+  public create(helloModel: HelloModel): Promise<HelloModel> {
+    return this.helloRepository.create(helloModel);
+  }
+
+  /** Update Hello */
+  public update(helloModel: HelloModel) {
+    this.helloRepository.update(helloModel);
+  }
+
+  /** Delete Hello */
+  public delete(helloModel: HelloModel) {
+    this.helloRepository.delete(helloModel);
+  }
 }

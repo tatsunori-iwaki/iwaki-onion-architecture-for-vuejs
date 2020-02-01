@@ -33,11 +33,6 @@ export default class hello {
   }
 
   static async reads(config: any) {
-    const helloModel: HelloModel = new HelloModel();
-    helloModel.id = 'sample';
-    helloModel.message = 'hello world!!'
-    await hello.db.insert(helloModel);
-
     const record = await this.db.find({});
     console.log('[DEBUG-MOCK]', record)
     return [200, record];

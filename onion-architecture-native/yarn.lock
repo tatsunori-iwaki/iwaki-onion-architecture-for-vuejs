@@ -1122,6 +1122,11 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.0.tgz#2a5fa918786d07d3725726f7f650527e1cfeaffd"
   integrity sha512-c4zji5CjWv1tJxIZkz1oUtGcdOlsH3aza28Nqmm+uNDWBRHoMsjooBEN4czZp1V3iXPihE/VRUOBqg+4Xq0W4g==
 
+"@types/react-native-uuid-generator@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-uuid-generator/-/react-native-uuid-generator-4.0.0.tgz#a8cec2287873a287ca85c269a2da627026c3f913"
+  integrity sha512-iAt2ILkYpatLaxw7MOryWbaH0L3h1hDa+ClIF3VO7bn03q7WLORTmczRm1oezBP21RYJKGL7JGQx2U3iXrLN0w==
+
 "@types/react-native@^0.61.8":
   version "0.61.8"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.61.8.tgz#22b7b2744de913a02965cdd4954aa92a216249ad"
@@ -4705,6 +4710,11 @@ react-is@^16.8.1, react-is@^16.8.4:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
+
+react-native-uuid-generator@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-uuid-generator/-/react-native-uuid-generator-6.1.1.tgz#59ca80f1eacd282311593af49fde34331d712b6e"
+  integrity sha512-jWF0wiGTUTkCBTpspUZatC7wlhjN3GRbW9YblaxxpuMuhk0DEOQXOp1qgsDd2vLTL8GsM3i7Hnatvfj1kwf88w==
 
 react-native-view-shot@3.0.2:
   version "3.0.2"
