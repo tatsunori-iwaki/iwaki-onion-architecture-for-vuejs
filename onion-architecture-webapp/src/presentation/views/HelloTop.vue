@@ -19,10 +19,8 @@
 import {
   createComponent,
   reactive,
-  ref,
   computed,
-  onMounted,
-  toRefs
+  onMounted
 } from "@vue/composition-api";
 import HelloForm from "@/presentation/components/HelloForm.vue";
 import HelloList from "@/presentation/components/HelloList.vue";
@@ -120,7 +118,7 @@ export default createComponent({
       try {
         state.helloUseCase.create(copyModel);
       } catch (e) {
-        // this.refs().show("error", e);
+        context.refs.helloModal.show("error", e); // FIXME: refs dose not exist on type SetupContext 👎
         return;
       }
       toast("create success.");
@@ -133,7 +131,7 @@ export default createComponent({
       try {
         state.helloUseCase.update(copyModel);
       } catch (e) {
-        // this.refs().helloModal.show("error", e);
+        context.refs.helloModal.show("error", e); // FIXME: refs dose not exist on type SetupContext 👎
         return;
       }
       toast("update success.");
@@ -144,7 +142,7 @@ export default createComponent({
       try {
         state.helloUseCase.delete(helloModel);
       } catch (e) {
-        // this.refs().helloModal.show("error", e);
+        context.refs.helloModal.show("error", e); // FIXME: refs dose not exist on type SetupContext 👎
         return;
       }
       toast("delete success.");
