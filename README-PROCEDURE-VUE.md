@@ -67,4 +67,5 @@ yarn add axios axios-mock-adapter
 yarn add element-ui
 yarn add vue-js-modal
 yarn add nedb-promises
+yarn add @vue/composition-api # vue 3.x Composition API
 ```
