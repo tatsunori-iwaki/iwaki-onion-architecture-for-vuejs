@@ -118,7 +118,14 @@ const metiods: IMetiods = {
 };
 
 /** Definition of event functions */
-const onEvents: any = {
+interface IOnEvents {
+  [key: string]: Function;
+  eventSelectHelloHandler(helloModel: HelloModel): void;
+  eventSaveHandler(): void;
+  eventCancelHandler(): void;
+  eventDeleteHelloHandler(): void;
+}
+const onEvents: IOnEvents = {
   /**
    * Receive event notifications from input components (select)
    * Set copy to separate from state.

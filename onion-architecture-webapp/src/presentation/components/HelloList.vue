@@ -37,7 +37,6 @@ export default createComponent({
     const selectHello = (helloModel: HelloModel) => {
       context.emit("select-event", helloModel);
     };
-    console.log(props);
     return {
       props,
       selectHello

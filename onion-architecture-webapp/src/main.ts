@@ -13,6 +13,17 @@ Vue.use(VueCompositionApi);
 Vue.use(ElementUI);
 Vue.use(VueJsModal);
 
+/**
+ * Warning: The SetupContext.refs won't exist in Vue 3.0.
+ * @vue/composition-api provide it as a workaround here.
+ * You may also need to augment the SetupContext when working with TypeScript.
+ */
+declare module "@vue/composition-api/dist/component/component" {
+  interface SetupContext {
+    readonly refs: { [key: string]: Vue | Element | Vue[] | Element[] };
+  }
+}
+
 new Vue({
   router,
   store,
