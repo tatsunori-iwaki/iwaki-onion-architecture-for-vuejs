@@ -15,16 +15,15 @@ import { HelloModel } from "../../domain/model/HelloModel";
 import hello from "../../../mocks/api/hellos/hello";
 import { SetupContext, createComponent } from "@vue/composition-api";
 
-interface Props {
-  helloModels?: HelloModel[];
-}
-
 /**
  * The component that displays the list.
  * The data life cycle is handled on the top screen.
  * In the component, the request received from Prop and
  * the operation result of Emit are notified at the top of the link.
  */
+interface Props {
+  helloModels?: HelloModel[];
+}
 export default createComponent({
   props: {
     helloModels: {
