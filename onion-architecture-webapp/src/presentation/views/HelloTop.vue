@@ -11,7 +11,6 @@
       @select-event="Presenter.eventSelectHelloHandler"
       :helloModels="reactiveStates.helloModels"
     />
-    <HelloModal ref="helloModal" />
   </el-row>
 </template>
 
@@ -113,7 +112,7 @@ class Presenter {
     try {
       await Presenter.helloUseCase.create(copyModel);
     } catch (e) {
-      // context.refs.helloModal.show("error", e); // FIXME: refs dose not exist on type SetupContext 👎
+      Message.warning({ showClose: true, message: e, type: "error" });
       return;
     }
     Message.success({
@@ -130,7 +129,7 @@ class Presenter {
     try {
       await Presenter.helloUseCase.update(copyModel);
     } catch (e) {
-      // context.refs.helloModal.show("error", e); // FIXME: refs dose not exist on type SetupContext 👎
+      Message.warning({ showClose: true, message: e, type: "error" });
       return;
     }
     Message.success({
@@ -145,7 +144,7 @@ class Presenter {
     try {
       await Presenter.helloUseCase.delete(helloModel);
     } catch (e) {
-      // context.refs.helloModal.show("error", e); // FIXME: refs dose not exist on type SetupContext 👎
+      Message.warning({ showClose: true, message: e, type: "error" });
       return;
     }
     Message.success({
@@ -164,8 +163,7 @@ class Presenter {
 export default createComponent({
   components: {
     HelloForm: () => import("@/presentation/components/HelloForm.vue"),
-    HelloList: () => import("@/presentation/components/HelloList.vue"),
-    HelloModal: () => import("@/presentation/components/HelloModal.vue")
+    HelloList: () => import("@/presentation/components/HelloList.vue")
   },
   setup(props: ComponentPropsOptions, context: SetupContext) {
     /** controller service */

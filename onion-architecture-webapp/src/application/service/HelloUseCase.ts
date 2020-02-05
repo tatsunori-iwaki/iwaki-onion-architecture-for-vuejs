@@ -32,7 +32,6 @@ export default class HelloUseCase {
 
   /** Update Hello */
   public update(helloModel: HelloModel) {
-    // throw new Error("hoge");
     this.helloRepository.update(helloModel);
   }
 
