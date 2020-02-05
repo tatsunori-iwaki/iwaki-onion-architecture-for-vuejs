@@ -1,14 +1,14 @@
 <template>
   <el-row>
     <HelloForm
-      @save-event="onEvents.eventSaveHandler"
-      @cancel-event="onEvents.eventCancelHandler"
-      @delete-event="onEvents.eventDeleteHelloHandler"
-      :helloModel="computedHelloModel"
-      :editMode="computedEditModeState"
+      @save-event="Presenter.eventSaveHandler"
+      @cancel-event="Presenter.eventCancelHandler"
+      @delete-event="Presenter.eventDeleteHelloHandler"
+      :helloModel="reactiveStates.helloModel"
+      :editMode="reactiveStates.editModeState"
     />
     <HelloList
-      @select-event="onEvents.eventSelectHelloHandler"
+      @select-event="Presenter.eventSelectHelloHandler"
       :helloModels="reactiveStates.helloModels"
     />
     <HelloModal ref="helloModal" />
@@ -20,15 +20,14 @@ import {
   createComponent,
   reactive,
   computed,
-  onMounted
+  onMounted,
+  SetupContext
 } from "@vue/composition-api";
-import HelloForm from "@/presentation/components/HelloForm.vue";
-import HelloList from "@/presentation/components/HelloList.vue";
-import HelloModal from "@/presentation/components/HelloModal.vue";
 import HelloUseCase from "../../application/service/HelloUseCase";
 import { HelloModel } from "../../domain/model/HelloModel";
 import { EditModeEnum } from "../enums/HelloEnums";
 import { Message } from "element-ui";
+import { ComponentPropsOptions } from "@vue/composition-api/dist/component/componentProps";
 
 /**
  * definition of states
@@ -37,42 +36,82 @@ interface IState {
   helloModel: HelloModel;
   helloModels: HelloModel[];
   editModeState: EditModeEnum;
-  helloUseCase: HelloUseCase;
 }
-const state: IState = {
-  helloModel: new HelloModel(),
-  helloModels: [],
-  editModeState: EditModeEnum.NEW,
-  helloUseCase: new HelloUseCase()
-};
 
-/**
- * Definition of private functions
- */
-interface IMetiods {
-  [key: string]: Function;
-  resetModel(): void;
-  loadHellos(): void;
-  createHello(): Promise<void>;
-  updateHello(): Promise<void>;
-  deleteHello(helloModel: HelloModel): Promise<void>;
-}
-const metiods: IMetiods = {
-  /** Initializes the model framework. */
-  resetModel: () => {
-    state.helloModel.message = "";
-  },
+class Presenter {
+  private static props: ComponentPropsOptions;
+  private static context: SetupContext;
+  private static state: IState;
+  private static helloUseCase = new HelloUseCase();
+
+  constructor(props: ComponentPropsOptions, context: SetupContext) {
+    Presenter.props = props;
+    Presenter.context = context;
+    Presenter.state = {
+      helloModel: new HelloModel(),
+      helloModels: [],
+      editModeState: EditModeEnum.NEW
+    };
+  }
+
+  public static getState(): IState {
+    return Presenter.state;
+  }
+
+  /**
+   * Receive event notifications from input components (select)
+   * Set copy to separate from state.
+   */
+  public static eventSelectHelloHandler(helloModel: HelloModel) {
+    Presenter.state.editModeState = EditModeEnum.EDIT;
+    Presenter.state.helloModel = { ...helloModel };
+  }
+
+  /**
+   * Receive event notifications from input components (save)
+   */
+  public static eventSaveHandler() {
+    if (Presenter.state.editModeState === EditModeEnum.NEW)
+      Presenter.createHello();
+    if (Presenter.state.editModeState === EditModeEnum.EDIT)
+      Presenter.updateHello();
+    Presenter.loadHellos();
+  }
+
+  /**
+   * Receive event notifications from input components (cancel)
+   */
+  public static eventCancelHandler() {
+    Presenter.state.editModeState = EditModeEnum.NEW;
+    Presenter.resetModel();
+  }
+
+  /**
+   * Receive event notifications from input components (delete)
+   */
+  public static async eventDeleteHelloHandler() {
+    Presenter.state.editModeState = EditModeEnum.NEW;
+    const copyModel = { ...Presenter.state.helloModel };
+    await Presenter.deleteHello(copyModel);
+    await Presenter.loadHellos();
+    Presenter.resetModel();
+  }
 
   /** Get Hello list. */
-  loadHellos: async () => {
-    state.helloModels = await state.helloUseCase.reads();
-  },
+  public static async loadHellos() {
+    Presenter.state.helloModels = await Presenter.helloUseCase.reads();
+  }
+
+  /** Initializes the model framework. */
+  private static resetModel() {
+    Presenter.state.helloModel.message = "";
+  }
 
   /** Create Hello list. */
-  createHello: async () => {
-    const copyModel = { ...state.helloModel };
+  private static async createHello() {
+    const copyModel = { ...Presenter.state.helloModel };
     try {
-      await state.helloUseCase.create(copyModel);
+      await Presenter.helloUseCase.create(copyModel);
     } catch (e) {
       // context.refs.helloModal.show("error", e); // FIXME: refs dose not exist on type SetupContext 👎
       return;
@@ -82,14 +121,14 @@ const metiods: IMetiods = {
       message: "create success.",
       type: "success"
     });
-    state.helloModel.message = "";
-  },
+    Presenter.state.helloModel.message = "";
+  }
 
   /** Update Hello list. */
-  updateHello: async () => {
-    const copyModel = { ...state.helloModel };
+  private static async updateHello() {
+    const copyModel = { ...Presenter.state.helloModel };
     try {
-      await state.helloUseCase.update(copyModel);
+      await Presenter.helloUseCase.update(copyModel);
     } catch (e) {
       // context.refs.helloModal.show("error", e); // FIXME: refs dose not exist on type SetupContext 👎
       return;
@@ -99,12 +138,12 @@ const metiods: IMetiods = {
       message: "update success.",
       type: "success"
     });
-  },
+  }
 
   /** Delete Hello list. */
-  deleteHello: async (helloModel: HelloModel) => {
+  private static async deleteHello(helloModel: HelloModel) {
     try {
-      await state.helloUseCase.delete(helloModel);
+      await Presenter.helloUseCase.delete(helloModel);
     } catch (e) {
       // context.refs.helloModal.show("error", e); // FIXME: refs dose not exist on type SetupContext 👎
       return;
@@ -115,54 +154,7 @@ const metiods: IMetiods = {
       type: "success"
     });
   }
-};
-
-/** Definition of event functions */
-interface IOnEvents {
-  [key: string]: Function;
-  eventSelectHelloHandler(helloModel: HelloModel): void;
-  eventSaveHandler(): void;
-  eventCancelHandler(): void;
-  eventDeleteHelloHandler(): void;
 }
-const onEvents: IOnEvents = {
-  /**
-   * Receive event notifications from input components (select)
-   * Set copy to separate from state.
-   */
-  eventSelectHelloHandler: (helloModel: HelloModel) => {
-    state.editModeState = EditModeEnum.EDIT;
-    state.helloModel = { ...helloModel };
-  },
-
-  /**
-   * Receive event notifications from input components (save)
-   */
-  eventSaveHandler: async () => {
-    if (state.editModeState === EditModeEnum.NEW) await metiods.createHello();
-    if (state.editModeState === EditModeEnum.EDIT) await metiods.updateHello();
-    await metiods.loadHellos();
-  },
-
-  /**
-   * Receive event notifications from input components (cancel)
-   */
-  eventCancelHandler: () => {
-    state.editModeState = EditModeEnum.NEW;
-    metiods.resetModel();
-  },
-
-  /**
-   * Receive event notifications from input components (delete)
-   */
-  eventDeleteHelloHandler: async () => {
-    state.editModeState = EditModeEnum.NEW;
-    const copyModel = { ...state.helloModel };
-    await metiods.deleteHello(copyModel);
-    await metiods.loadHellos();
-    metiods.resetModel();
-  }
-};
 
 /**
  * This is the top screen for CRUD of Hello.
@@ -171,29 +163,26 @@ const onEvents: IOnEvents = {
  */
 export default createComponent({
   components: {
-    HelloForm,
-    HelloList,
-    HelloModal
+    HelloForm: () => import("@/presentation/components/HelloForm.vue"),
+    HelloList: () => import("@/presentation/components/HelloList.vue"),
+    HelloModal: () => import("@/presentation/components/HelloModal.vue")
   },
-  setup(props, context) {
+  setup(props: ComponentPropsOptions, context: SetupContext) {
+    /** controller service */
+    new Presenter(props, context);
+
     /**
      * setup can also return a render function,
      * which can directly make use of reactive state declared in the same scope.
      * Takes an object and returns a reactive proxy of the original.
      * This is equivalent to 2.x's Vue.observable().
      */
-    const reactiveStates = reactive(state);
+    const reactiveStates = reactive(Presenter.getState());
 
     /** mounted is the state just after the DOM was created. */
     onMounted(() => {
-      metiods.loadHellos();
+      Presenter.loadHellos();
     });
-
-    /** Link the hello model to the input component by calculation. */
-    const computedHelloModel = computed(() => reactiveStates.helloModel);
-
-    /** Link the hello model to the input component by calculation. */
-    const computedEditModeState = computed(() => reactiveStates.editModeState);
 
     /**
      * Remember to always return values, functions
@@ -201,9 +190,7 @@ export default createComponent({
      */
     return {
       reactiveStates,
-      onEvents,
-      computedHelloModel,
-      computedEditModeState
+      Presenter
     };
   }
 });
