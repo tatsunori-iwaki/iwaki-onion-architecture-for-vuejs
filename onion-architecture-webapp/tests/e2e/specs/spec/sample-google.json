@@ -1,0 +1,46 @@
+{
+  "specs": [
+    {
+      "command":"url",
+      "types":"http://www.google.com",
+      "option":"",
+      "discription":"open google"
+    },
+    {
+      "command":"waitForElementVisible",
+      "types":"body",
+      "option":"1000",
+      "discription":"Wait until the body element is displayed"
+    },
+    {
+      "command":"setValue",
+      "types":"input[type=text]",
+      "option":"hello world",
+      "discription":"Enter 'hello world' on screen"
+    },
+    {
+      "command":"waitForElementVisible",
+      "types":"input[name=btnK]",
+      "option":"1000",
+      "discription":"Wait for the search button to appear"
+    },
+    {
+      "command":"click",
+      "types":"input[name=btnK]",
+      "option":"",
+      "discription":"do a google search"
+    },
+    {
+      "command":"pause",
+      "types":"2000",
+      "option":"",
+      "discription":"pause 2 sec"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/sample-google.png",
+      "option":"",
+      "discription":"pause 2 sec"
+    }
+  ]
+}
