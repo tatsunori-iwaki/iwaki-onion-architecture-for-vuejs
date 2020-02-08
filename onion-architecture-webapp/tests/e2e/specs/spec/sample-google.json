@@ -40,7 +40,7 @@
       "command":"saveScreenshot",
       "types":"./e2e-screenshots/sample-google.png",
       "option":"",
-      "discription":"pause 2 sec"
+      "discription":"save screenshot"
     }
   ]
 }
