@@ -1,7 +1,7 @@
 import HelloUseCase from "@/application/service/HelloUseCase";
 import { HelloModel } from "@/domain/model/HelloModel";
 
-describe("/application/service/HelloUseCase test sample", () => {
+describe("/application/service/HelloUseCase", () => {
   it("use case - reads", async () => {
     const expected = Promise.resolve([]);
     const helloUseCase = new HelloUseCase();

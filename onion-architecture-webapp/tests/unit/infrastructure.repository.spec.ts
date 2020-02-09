@@ -2,7 +2,7 @@ import RepositoryFactory from "@/infrastructure/configuration/RepositoryFactory"
 import { HelloModel } from "@/domain/model/HelloModel";
 import { HelloRepository } from "@/domain/service/HelloRepository";
 
-describe("/infrastructure/repositories/HelloRepositoryImpl test sample", () => {
+describe("/infrastructure/repositories/HelloRepositoryImpl", () => {
   const OLD_ENV = process.env;
 
   beforeEach(() => {
