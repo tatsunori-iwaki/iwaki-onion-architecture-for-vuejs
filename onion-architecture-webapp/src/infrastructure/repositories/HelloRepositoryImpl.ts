@@ -54,11 +54,11 @@ export default class HelloRepositoryImpl implements HelloRepository {
    * Create UUID
    * However, best practice is to implement universality in the domain model.
    */
-  private _uuid(c = 9999): string {
-    const t = ((Date.now() + 12219292800000) * 1e4).toString(16);
-    const n = crypto.getRandomValues(new Uint8Array(6)).reduce((sum, x, i) => {
-      return sum + (i === 0 ? x | 1 : x).toString(16).padStart(2, "0");
-    }, "");
-    return `${t.slice(-8)}-${t.slice(-12, -8)}-1${t.slice(0, 3)}-${c}-${n}`;
+  private _uuid(): string {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+      var r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
   }
 }
