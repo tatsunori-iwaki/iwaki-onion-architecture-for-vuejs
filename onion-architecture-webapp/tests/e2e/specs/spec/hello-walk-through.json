@@ -1,0 +1,124 @@
+{
+  "specs": [
+    {
+      "command":"url",
+      "types":"http://localhost:8080",
+      "option":"",
+      "discription":"open home"
+    },
+    {
+      "command":"url",
+      "types":"http://localhost:8080/hello-top",
+      "option":"",
+      "discription":"open hello-top"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/hello-walk-through-001-emity.png",
+      "option":"",
+      "discription":"save screenshot"
+    },
+    {
+      "command":"setValue",
+      "types":"input[type=text]",
+      "option":"hello world",
+      "discription":"Enter 'hello world' on screen"
+    },
+    {
+      "command":"click",
+      "types":".el-button:nth-child(1) > span",
+      "option":"",
+      "discription":"click create button"
+    },
+    {
+      "command":"pause",
+      "types":"1000",
+      "option":"",
+      "discription":"pause 1 sec"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/hello-walk-through-002-created.png",
+      "option":"",
+      "discription":"save screenshot"
+    },
+    {
+      "command":"click",
+      "types":".el-table__row > .el-table_1_column_1 > .cell",
+      "option":"",
+      "discription":"click first record from list"
+    },
+    {
+      "command":"setValue",
+      "types":"input[type=text]",
+      "option":"hello world update",
+      "discription":"change hello message"
+    },
+    {
+      "command":"click",
+      "types":".el-button:nth-child(2) > span",
+      "option":"",
+      "discription":"and click update button"
+    },
+    {
+      "command":"pause",
+      "types":"1000",
+      "option":"",
+      "discription":"pause 1 sec"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/hello-walk-through-003-updated.png",
+      "option":"",
+      "discription":"save screenshot"
+    },
+    {
+      "command":"click",
+      "types":".el-table__row > .el-table_1_column_1 > .cell",
+      "option":"",
+      "discription":"click first record from list"
+    },
+    {
+      "command":"click",
+      "types":".el-button--info > span",
+      "option":"",
+      "discription":"and click cancel button"
+    },
+    {
+      "command":"pause",
+      "types":"1000",
+      "option":"",
+      "discription":"pause 1 sec"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/hello-walk-through-004-canceled.png",
+      "option":"",
+      "discription":"save screenshot"
+    },
+    {
+      "command":"click",
+      "types":".el-table__row > .el-table_1_column_1 > .cell",
+      "option":"",
+      "discription":"click first record from list"
+    },
+    {
+      "command":"click",
+      "types":".el-button--danger > span",
+      "option":"",
+      "discription":"and click delete button"
+    },
+    {
+      "command":"pause",
+      "types":"1000",
+      "option":"",
+      "discription":"pause 1 sec"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/hello-walk-through-005-deleted.png",
+      "option":"",
+      "discription":"save screenshot"
+    }
+  ]
+}

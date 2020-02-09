@@ -1,0 +1,70 @@
+{
+  "specs": [
+    {
+      "command":"url",
+      "types":"http://localhost:8080",
+      "option":"",
+      "discription":"open home"
+    },
+    {
+      "command":"url",
+      "types":"http://localhost:8080/hello-top",
+      "option":"",
+      "discription":"open hello-top"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/hello-state-holds-001-emity.png",
+      "option":"",
+      "discription":"save screenshot"
+    },
+    {
+      "command":"setValue",
+      "types":"input[type=text]",
+      "option":"hello world",
+      "discription":"Enter 'hello world' on screen"
+    },
+    {
+      "command":"click",
+      "types":".el-button:nth-child(1) > span",
+      "option":"",
+      "discription":"click create button"
+    },
+    {
+      "command":"pause",
+      "types":"1000",
+      "option":"",
+      "discription":"pause 1 sec"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/hello-state-holds-002-created.png",
+      "option":"",
+      "discription":"save screenshot"
+    },
+    {
+      "command":"click",
+      "types":"a:nth-child(1)",
+      "option":"",
+      "discription":"open home"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/hello-state-holds-003-home.png",
+      "option":"",
+      "discription":"save screenshot"
+    },
+    {
+      "command":"click",
+      "types":"a:nth-child(2)",
+      "option":"",
+      "discription":"open hello-top"
+    },
+    {
+      "command":"saveScreenshot",
+      "types":"./e2e-screenshots/hello-state-holds-004-holded.png",
+      "option":"",
+      "discription":"save screenshot"
+    }
+  ]
+}

@@ -44,12 +44,15 @@ module.exports = {
       return files;
     });
     for (const index in files) {
+      // skip test
+      // if ("sample-google.json" === files[index]) continue;
+
       const runningFile = basePath + files[index];
       console.log("Running spec: ", runningFile);
       const readFileSync = await fs.readFile(runningFile, "utf8");
       const spec = JSON.parse(readFileSync);
       e2e(browser, spec);
-      browser.end();
     }
+    browser.end();
   }
 };

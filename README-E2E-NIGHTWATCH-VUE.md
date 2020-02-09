@@ -169,8 +169,8 @@ module.exports = {
       const readFileSync = await fs.readFile(runningFile, "utf8");
       const spec = JSON.parse(readFileSync);
       e2e(browser, spec);
-      browser.end();
     }
+    browser.end();
   }
 };
 ```
