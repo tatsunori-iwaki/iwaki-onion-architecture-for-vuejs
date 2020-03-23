@@ -1,161 +1,197 @@
 <template>
   <el-row>
     <HelloForm
-      @save-event="eventSaveHandler"
-      @cancel-event="eventCancelHandler"
-      @delete-event="eventDeleteHelloHandler"
-      :helloModel="computedHelloModel"
-      :editMode="computedEditModeState"
+      @save-event="Presenter.eventSaveHandler"
+      @cancel-event="Presenter.eventCancelHandler"
+      @delete-event="Presenter.eventDeleteHelloHandler"
+      :helloModel="reactiveStates.helloModel"
+      :editMode="reactiveStates.editModeState"
     />
     <HelloList
-      @select-event="eventSelectHelloHandler"
-      :helloModels="helloModels"
+      @select-event="Presenter.eventSelectHelloHandler"
+      :helloModels="reactiveStates.helloModels"
     />
-    <HelloModal ref="helloModal" />
   </el-row>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import HelloForm from "@/presentation/components/HelloForm.vue";
-import HelloList from "@/presentation/components/HelloList.vue";
-import HelloModal from "@/presentation/components/HelloModal.vue";
+import {
+  createComponent,
+  reactive,
+  computed,
+  onMounted,
+  SetupContext
+} from "@vue/composition-api";
 import HelloUseCase from "../../application/service/HelloUseCase";
 import { HelloModel } from "../../domain/model/HelloModel";
 import { EditModeEnum } from "../enums/HelloEnums";
+import { Message } from "element-ui";
+import { ComponentPropsOptions } from "@vue/composition-api/dist/component/componentProps";
 
 /**
- * This is the top screen for CRUD of Hello.
- * Responsible for linking each component and linking with the application layer.
- * The basics of the data are all handled by the parent top screen.
+ * definition of states
  */
-@Component({ components: { HelloForm, HelloList, HelloModal } })
-export default class HelloTop extends Vue {
-  /** Hello model. */
-  private helloModel: HelloModel = new HelloModel();
-  /** Hello list model. */
-  private helloModels: HelloModel[] = [];
-  /** It is in registration edit mode. */
-  private editModeState: EditModeEnum = EditModeEnum.NEW;
-  /** Class provided from application layer. */
-  private helloUseCase: HelloUseCase = new HelloUseCase();
+interface IState {
+  helloModel: HelloModel;
+  helloModels: HelloModel[];
+  editModeState: EditModeEnum;
+}
 
-  /** mounted is the state just after the DOM was created. */
-  async mounted() {
-    this.loadHellos();
+class Presenter {
+  private static props: ComponentPropsOptions;
+  private static context: SetupContext;
+  private static state: IState;
+  private static helloUseCase = new HelloUseCase();
+
+  constructor(props: ComponentPropsOptions, context: SetupContext) {
+    Presenter.props = props;
+    Presenter.context = context;
+    Presenter.state = {
+      helloModel: new HelloModel(),
+      helloModels: [],
+      editModeState: EditModeEnum.NEW
+    };
   }
 
-  /** Link the hello model to the input component by calculation. */
-  get computedHelloModel(): HelloModel {
-    return this.helloModel;
-  }
-
-  /** Link the edit mode to the input component by calculation. */
-  get computedEditModeState(): EditModeEnum {
-    return this.editModeState;
-  }
-
-  /**
-   * Receive event notifications from input components (save)
-   */
-  public eventSaveHandler() {
-    if (this.editModeState === EditModeEnum.NEW) this.createHello();
-    if (this.editModeState === EditModeEnum.EDIT) this.updateHello();
-    this.loadHellos();
-  }
-
-  /**
-   * Receive event notifications from input components (cancel)
-   */
-  public eventCancelHandler() {
-    this.editModeState = EditModeEnum.NEW;
-    this.resetModel();
-  }
-
-  /**
-   * Receive event notifications from input components (delete)
-   */
-  public eventDeleteHelloHandler() {
-    this.editModeState = EditModeEnum.NEW;
-    const copyModel = { ...this.helloModel };
-    this.deleteHello(copyModel);
-    this.loadHellos();
-    this.resetModel();
+  public static getState(): IState {
+    return Presenter.state;
   }
 
   /**
    * Receive event notifications from input components (select)
    * Set copy to separate from state.
    */
-  public eventSelectHelloHandler(helloModel: HelloModel) {
-    this.editModeState = EditModeEnum.EDIT;
-    this.helloModel = { ...helloModel };
+  public static eventSelectHelloHandler(helloModel: HelloModel) {
+    Presenter.state.editModeState = EditModeEnum.EDIT;
+    Presenter.state.helloModel = { ...helloModel };
   }
 
   /**
-   * Methodize ref and access child component methods.
-   * Because in TypeScript,
-   * if ref is not defined as "any" type, a compile error will occur.
+   * Receive event notifications from input components (save)
    */
-  private refs(): any {
-    return this.$refs;
+  public static eventSaveHandler() {
+    if (Presenter.state.editModeState === EditModeEnum.NEW)
+      Presenter.createHello();
+    if (Presenter.state.editModeState === EditModeEnum.EDIT)
+      Presenter.updateHello();
+    Presenter.loadHellos();
+  }
+
+  /**
+   * Receive event notifications from input components (cancel)
+   */
+  public static eventCancelHandler() {
+    Presenter.state.editModeState = EditModeEnum.NEW;
+    Presenter.resetModel();
+  }
+
+  /**
+   * Receive event notifications from input components (delete)
+   */
+  public static async eventDeleteHelloHandler() {
+    Presenter.state.editModeState = EditModeEnum.NEW;
+    const copyModel = { ...Presenter.state.helloModel };
+    await Presenter.deleteHello(copyModel);
+    await Presenter.loadHellos();
+    Presenter.resetModel();
+  }
+
+  /** Get Hello list. */
+  public static async loadHellos() {
+    Presenter.state.helloModels = await Presenter.helloUseCase.reads();
   }
 
   /** Initializes the model framework. */
-  private resetModel() {
-    this.helloModel.message = "";
+  private static resetModel() {
+    Presenter.state.helloModel.message = "";
   }
 
-  /** Show toast. */
-  private toast(infomationMassege: string) {
-    this.$message({
+  /** Create Hello list. */
+  private static async createHello() {
+    const copyModel = { ...Presenter.state.helloModel };
+    try {
+      await Presenter.helloUseCase.create(copyModel);
+    } catch (e) {
+      Message.warning({ showClose: true, message: e, type: "error" });
+      return;
+    }
+    Message.success({
       showClose: true,
-      message: infomationMassege,
+      message: "create success.",
+      type: "success"
+    });
+    Presenter.state.helloModel.message = "";
+  }
+
+  /** Update Hello list. */
+  private static async updateHello() {
+    const copyModel = { ...Presenter.state.helloModel };
+    try {
+      await Presenter.helloUseCase.update(copyModel);
+    } catch (e) {
+      Message.warning({ showClose: true, message: e, type: "error" });
+      return;
+    }
+    Message.success({
+      showClose: true,
+      message: "update success.",
       type: "success"
     });
   }
 
-  /** Get Hello list. */
-  private async loadHellos() {
-    this.helloModels = await this.helloUseCase.reads();
-  }
-
-  /** Create Hello list. */
-  private async createHello() {
-    const copyModel = { ...this.helloModel };
-    try {
-      this.helloUseCase.create(copyModel);
-    } catch (e) {
-      this.refs().helloModal.show("error", e);
-      return;
-    }
-    this.toast("create success.");
-    this.resetModel();
-  }
-
-  /** Update Hello list. */
-  private async updateHello() {
-    const copyModel = { ...this.helloModel };
-    try {
-      this.helloUseCase.update(copyModel);
-    } catch (e) {
-      this.refs().helloModal.show("error", e);
-      return;
-    }
-    this.toast("update success.");
-  }
-
   /** Delete Hello list. */
-  private async deleteHello(helloModel: HelloModel) {
+  private static async deleteHello(helloModel: HelloModel) {
     try {
-      this.helloUseCase.delete(helloModel);
+      await Presenter.helloUseCase.delete(helloModel);
     } catch (e) {
-      this.refs().helloModal.show("error", e);
+      Message.warning({ showClose: true, message: e, type: "error" });
       return;
     }
-    this.toast("delete success.");
+    Message.success({
+      showClose: true,
+      message: "delete success.",
+      type: "success"
+    });
   }
 }
+
+/**
+ * This is the top screen for CRUD of Hello.
+ * Responsible for linking each component and linking with the application layer.
+ * The basics of the data are all handled by the parent top screen.
+ */
+export default createComponent({
+  components: {
+    HelloForm: () => import("@/presentation/components/HelloForm.vue"),
+    HelloList: () => import("@/presentation/components/HelloList.vue")
+  },
+  setup(props: ComponentPropsOptions, context: SetupContext) {
+    /** controller service */
+    new Presenter(props, context);
+
+    /**
+     * setup can also return a render function,
+     * which can directly make use of reactive state declared in the same scope.
+     * Takes an object and returns a reactive proxy of the original.
+     * This is equivalent to 2.x's Vue.observable().
+     */
+    const reactiveStates = reactive(Presenter.getState());
+
+    /** mounted is the state just after the DOM was created. */
+    onMounted(() => {
+      Presenter.loadHellos();
+    });
+
+    /**
+     * Remember to always return values, functions
+     * used in <template> as objects by return of setup ()
+     */
+    return {
+      reactiveStates,
+      Presenter
+    };
+  }
+});
 </script>
 
 <style scoped lang="scss">
